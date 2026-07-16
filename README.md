@@ -25,8 +25,8 @@ Full requirements and design rationale: [`docs/Major-Project-PRD.md`](docs/Major
 | Session Manager (FR-3) | ✅ Implemented & tested |
 | Media Router (FR-2) | ✅ Implemented & tested |
 | Metrics Engine (FR-5) | ✅ Implemented & tested |
-| Signaling Server (WebRTC handshake) | ✅ Implemented & tested |
-| WebRTC Client (mic capture/playback) | 🔲 Not started |
+| Signaling Server (WebRTC handshake) | ✅ Implemented & tested (starts cleanly) |
+| WebRTC Client (mic capture/playback) | 🟡 Written, NOT yet run/tested end-to-end |
 | Serial Bridge (Arduino comms, FR-6) | 🔲 Deferred |
 | Embedded Console (Arduino, FR-7/FR-8) | 🔲 Deferred — hardware phase later |
 | Plugin Interface (FR-9) | 🔲 Placeholder only (by design, Sem 1) |
@@ -35,6 +35,32 @@ Full requirements and design rationale: [`docs/Major-Project-PRD.md`](docs/Major
 > The focus right now is getting the software gateway (session handling,
 > audio routing, metrics, signaling) working and tested end-to-end between
 > two clients. Hardware integration will follow once this is stable.
+
+---
+
+## TODO
+
+### ✅ Done
+- [x] Project structure created
+- [x] `session_manager.py` — written and tested standalone
+- [x] `media_router.py` — written and tested standalone
+- [x] `metrics_engine.py` — written and tested standalone (uses `psutil`)
+- [x] `signaling_server.py` — written, starts cleanly, listens on port 8765
+- [x] `webrtc_client.py` — written (mic capture via `aiortc.MediaPlayer`, speaker playback via `sounddevice`)
+- [x] ffmpeg installed on Windows dev machine, confirmed working
+- [x] Microphone device identified: `Microphone Array (AMD Audio Device)` — plugged into client code
+
+### 🔲 To Do Next
+- [ ] Run signaling server + two client instances (`laptop_A`, `laptop_B`) and verify handshake completes
+- [ ] Debug any mic access conflicts when running two clients on the same machine
+- [ ] Verify actual audio is heard on both ends (currently untested)
+- [ ] Test across two separate laptops on same Wi-Fi (matches real PRD scenario, not just localhost)
+- [ ] Add `logger.py` — persistent communication logs (FR-4)
+- [ ] Add `serial_bridge.py` — Arduino serial communication (FR-6) — **deferred to hardware phase**
+- [ ] Write `plugin_base.py` interface stub properly (FR-9) — placeholder currently empty
+- [ ] Add unit tests in `tests/` folder for each module (currently only manual `__main__` tests exist)
+- [ ] Write `scripts/setup_env.sh` / equivalent `.ps1` for one-command environment setup
+- [ ] Update this README once client is confirmed working end-to-end
 
 ---
 
